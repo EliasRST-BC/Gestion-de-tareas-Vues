@@ -1,56 +1,92 @@
 <template>
-    <!-- Contenedor principal del ítem de tarea -->
-    <div>
-        <!-- Contenedor del título y el estado de la tarea -->
-        <div>
-            <!-- Muestra el título de la tarea y aplica un estilo tachado si la tarea está completada -->
-            <!-- Comentario: Cambia este estilo o agrega clases personalizadas -->
-            <h5 :style="{ textDecoration: completed ? 'line-through' : 'none' }">
-                {{ title }}
-            </h5>
-
-            <!-- Muestra si la tarea está Completada o Pendiente -->
-            <!-- Comentario: Puedes cambiar este texto o agregar etiquetas visuales (por ejemplo, con colores o iconos) -->
-            <span>
-                {{ completed ? 'Completada' : 'Pendiente' }}
-            </span>
-        </div>
-
-        <!-- Contenedor de botones de acción -->
-        <div>
-            <!-- Botón para marcar la tarea como completada o pendiente -->
-            <!-- Emite el evento 'toggle-completion' para indicar que se cambió el estado de la tarea -->
-            <!-- Comentario: Personaliza el texto, estilo o reemplaza con un ícono (ej. ✔ / ✘) -->
-            <button @click="$emit('toggle-completion')">
-                Marcar como {{ completed ? 'Pendiente' : 'Completada' }}
-            </button>
-
-            <!-- Botón para eliminar la tarea de la lista -->
-            <!-- Emite el evento 'delTodo' para indicar que se debe eliminar esta tarea -->
-            <!-- Comentario: Modifica el estilo, el texto, o reemplaza con un ícono como una papelera -->
-            <button @click="$emit('delTodo')">
-                Eliminar
-            </button>
-        </div>
+  <div class="todo-item">
+    <div class="task-info">
+      <!-- Título con estilo tachado si la tarea está completada -->
+      <h5 :class="{ 'task-completed': completed }">
+        {{ title }}
+      </h5>
+      <!-- Estado de la tarea con colores distintivos -->
+      <span :class="completed ? 'status-completed' : 'status-pending'">
+        <i :class="completed ? 'bi-check-circle-fill' : 'bi-circle'"></i>
+        {{ completed ? 'Completada' : 'Pendiente' }}
+      </span>
     </div>
+
+    <!-- Botones de acción con iconos -->
+    <div class="action-buttons">
+      <button @click="$emit('toggle-completion')" class="btn btn-toggle">
+        <i :class="completed ? 'bi-arrow-counterclockwise' : 'bi-check-circle'"></i>
+      </button>
+      <button @click="$emit('delTodo')" class="btn btn-delete">
+        <i class="bi-trash-fill"></i>
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-    // Define el nombre del componente
-    name: 'TodoItem',
-
-    // Define las propiedades que este componente recibirá del componente padre
-    // Comentario: Puedes agregar más propiedades si es necesario (por ejemplo, 'dueDate' para la fecha de vencimiento)
-    props: {
-        title: String,      // Título de la tarea
-        completed: Boolean, // Estado de la tarea (completada o pendiente)
-    }
-}
+  name: 'TodoItem',
+  props: {
+    title: String,
+    completed: Boolean,
+  },
+};
 </script>
 
 <style scoped>
-/* Puedes agregar tus propios estilos aquí */
-/* Por ejemplo, cambia el color de fondo de las tareas completadas */
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+.task-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.status-completed {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.action-buttons .btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.btn-toggle {
+  color: #17a2b8;
+}
+
+.btn-toggle:hover {
+  color: #138496;
+}
+
+.btn-delete {
+  color: #dc3545;
+}
+
+.btn-delete:hover {
+  color: #c82333;
+}
 </style>
+

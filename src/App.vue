@@ -1,15 +1,51 @@
 <template>
   <div id="app">
-    <!-- Barra de navegación con enlaces a diferentes rutas -->
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/addtask">Agregar Tarea</router-link> 
+    <!-- Barra de navegación con Bootstrap e íconos -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <router-link class="nav-link styled-button" aria-current="page" to="/">
+                <i class="bi bi-house-door-fill"></i> Inicio
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link styled-button" to="/addtask">
+                <i class="bi bi-plus-circle-fill"></i> Agregar Tarea
+              </router-link>
+            </li>
+            <li class="nav-item" v-if="$route.path !== '/combinedview'">
+              <router-link class="nav-link styled-button" to="/combinedview">
+                <i class="bi bi-eye-fill"></i> Vista Combinada
+              </router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
+    
     <!-- Aquí se cargará el componente correspondiente a la ruta seleccionada -->
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  name: "App",
+};
+</script>
 
 <style>
 #app {
@@ -20,16 +56,34 @@
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
+.navbar {
+  margin-bottom: 30px;
 }
 
-nav a {
+.styled-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 15px;
+  margin: 5px;
   font-weight: bold;
-  color: #2c3e50;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #007bff, #42a5f5);
+  color: white !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-nav a.router-link-exact-active {
+.styled-button i {
+  margin-right: 5px;
+}
+
+.styled-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.router-link-exact-active {
   color: #42b983;
 }
 </style>

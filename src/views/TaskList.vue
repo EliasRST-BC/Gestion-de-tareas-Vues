@@ -1,52 +1,69 @@
 <template>
-    <div>
-        <h1>Lista de Tareas</h1>
-        <button @click="fetchTasks">Cargar Tareas</button>
-        <div v-if="tasks.length > 0">
-            <div v-for="task in tasks" :key="task.id">
-                <div>
-                    <h5 :style="{ textDecoration: task.completed ? 'line-through' : 'none' }">{{ task.todo }}</h5>
-                    <span>{{ task.completed ? 'Completada' : 'Pendiente' }}</span>
-                    <button @click="toggleTaskCompletion(task)">
-                        {{ task.completed ? 'Desmarcar' : 'Completar' }}
-                    </button>
-                    <button @click="deleteTask(task)">Eliminar</button>
-                </div>
-            </div>
+  <div>
+    <h2>Lista de Tareas</h2>
+    <ul>
+      <!-- Mostrar las tareas -->
+      <li v-for="task in tasks" :key="task.id" class="task-item">
+        <span :class="{ completed: task.completed }">{{ task.todo }}</span>
+        <div>
+          <!-- Botón para marcar/desmarcar tarea como completada -->
+          <button @click="$emit('toggle-completion', task)" class="styled-button">
+            <i :class="task.completed ? 'bi-arrow-counterclockwise' : 'bi-check-circle'"></i>
+          </button>
+          <!-- Botón para eliminar la tarea -->
+          <button @click="$emit('delTodo', task)" class="styled-button delete-button">
+            <i class="bi-trash-fill"></i>
+          </button>
         </div>
-    </div>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "TaskList",
-    data() {
-        return {
-            tasks: [], // Almacenamiento local de las tareas traídas de la API
-        };
-    },
-    methods: {
-        // Llamada para obtener las tareas desde la API externa
-        fetchTasks() {
-            // Aquí deberían realizar la solicitud a la API usando axios o fetch.
-            // La URL que usaremos es: https://dummyjson.com/todos
-
-            // Sugerencia: Intentar implementarlo con axios o fetch
-        },
-
-        // Cambiar el estado de una tarea (completada/no completada)
-        toggleTaskCompletion(task) {
-            task.completed = !task.completed;
-        },
-
-        // Eliminar la tarea seleccionada
-        deleteTask(task) {
-            this.tasks = this.tasks.filter((t) => t.id !== task.id);
-        },
-    },
-};
+  name: 'TaskList',
+  props: {
+    tasks: {
+      type: Array,
+      default: () => []
+    }
+  }
+}
 </script>
 
 <style scoped>
-/* Aquí pueden experimentar con estilos de tu preferencia */
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.styled-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+  color: #17a2b8;
+}
+.styled-button i {
+  font-size: 1.2em;
+  color: #007bff; /* Asegúrate de que los iconos tengan un color definido */
+}
+
+.delete-button i {
+  color: #dc3545; /* Color rojo para el icono de eliminar */
+}
+
+.styled-button:hover i,
+.delete-button:hover i {
+  color: white; /* Color de los iconos cuando se pasa el ratón */
+}
 </style>
