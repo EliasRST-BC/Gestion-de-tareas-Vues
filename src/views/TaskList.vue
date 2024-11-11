@@ -55,7 +55,7 @@ export default {
 }
 .styled-button i {
   font-size: 1.2em;
-  color: #007bff; /* Asegúrate de que los iconos tengan un color definido */
+  color: #007bff;
 }
 
 .delete-button i {
