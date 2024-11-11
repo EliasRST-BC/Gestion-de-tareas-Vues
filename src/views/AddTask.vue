@@ -38,7 +38,7 @@ export default {
       }
     },
     showTasksApi() {
-      this.$emit('toggleApiTasks'); // Emitimos el evento para mostrar las tareas de la API
+      this.$emit('toggleApiTasks');
     }
   }
 };
