@@ -64,6 +64,6 @@ export default {
 
 .styled-button:hover i,
 .delete-button:hover i {
-  color: white; /* Color de los iconos cuando se pasa el ratón */
+  color: white;
 }
 </style>
