@@ -59,16 +59,14 @@ export default {
       const index = this.tasks.findIndex(t => t.id === task.id);
       if (index !== -1) {
         this.tasks[index].completed = !this.tasks[index].completed;
-        // Actualizar estado en la API si es necesario
       }
     },
     deleteTask(task) {
       this.tasks = this.tasks.filter(t => t.id !== task.id);
-      // Eliminar tarea de la API si es necesario
     }
   },
   mounted() {
-    this.fetchTasks();  // Cargar tareas al montar el componente
+    this.fetchTasks();
   }
 };
 </script>
